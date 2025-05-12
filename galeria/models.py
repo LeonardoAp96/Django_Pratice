@@ -3,6 +3,7 @@ from datetime import datetime
 
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth.models import User
 
 class Fotografia(models.Model):
 
@@ -21,6 +22,13 @@ class Fotografia(models.Model):
     foto = models.ImageField(upload_to='fotos/%Y/%m/%d/', blank=True)
     publicada = models.BooleanField(default=False)
     data_fotografia = models.DateField(default= datetime.now, blank=False)
+    usuario = models.ForeignKey(
+        to=User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=False,
+        related_name='user',
+    )
 
     def __str__(self):
         return self.nome
